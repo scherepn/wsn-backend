@@ -341,32 +341,72 @@ Ignored.
     {}
 
 --------------------------------------------------------------------------------
-4 Operations on Sample Objects
+4. Operations on Data Samples
 ==============================
 
-4.1 Add a New Data Record
--------------------------
+4.1. Add a New Data Record
+--------------------------
 **Description:**
+
+This API endpoint is used by WSN servers to upload new sensor data as it is being collected.
+
+The datetime field is used to specify when the data was collected. This field is optional. If omitted, the WSN service will use the time when the request was made.
 
 **URL:**
 
-    POST https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/data
+    POST <API-BASE>/wsn/<WSN_ID>/data
 
 **BODY:**
 
-    { "key" : <WSN_API_KEY>,
-      "datetime" : "20131023T0502Z" # Use ISO-8601 Format ONLY
-      "data" : { "<CHANNEL_ID>" : 5,
-                 "<CHANNEL_ID" : 10 }
+    { "datetime" : "20131023T0502Z" # ISO-8601 Format and UNIX datetime are both supported.
+      "data" : [ { "sensor_id" : "98f07253-ea74-4c1a-aef3-27657563f8d7"
+                   "data" : { "<CHANNEL_ID>" : 5,
+                              "<CHANNEL_ID>" : 10 }
+                 },
+                 { "sensor_id" : "98db944c-b906-4bc5-bcb8-0e237c0fd079"
+                   "data" : { "<CHANNEL_ID>" : 5,
+                              "<CHANNEL_ID>" : 10 }
+                 }
+               ]
     }
 
-4.2 View data records
----------------------
-**Description:** TODO: This is critical and isn't defined yet...
+4.2. View Data Records
+----------------------
+**Description:**
+
+Provide an extensible interface to request raw and processed data from a Wireless Sensor Network.
+
+This endpoint has three modes: live, historical, and processed.
+
+* **Live:** Return the most recent values for every sensor/channel within this WSN.
+* **Historical:** Return recorded data from sensors selected by sensor, channel, or start/end time boundary.
+* **Processed** Return the results of a data processing job.
 
 **URL:**
 
-    GET https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/data
+    GET <API-BASE>/wsn/<WSN_ID>/data
+
+**HTTP QUERY PARAMETERS:**
+
+    "mode" : { "live", "historical", "processed" }
+
+If the mode is "historical" or "processed" the following additional parameters are available:
+
+    "startdate" : <datetime> # ISO-8601 Format only
+    "enddate" : <datetime>
+    "sensors" : <sensor id>[,<sensor id>, ...]
 
 **RETURN:**
+
+    { "data" : [ { "datetime" : "20131023T0502Z" # ISO-8601 Format
+                   "sensor_id" : "98f07253-ea74-4c1a-aef3-27657563f8d7"
+                   "data" : { "<CHANNEL_ID>" : 5,
+                              "<CHANNEL_ID>" : 10 }
+                 },
+                 { "sensor_id" : "98db944c-b906-4bc5-bcb8-0e237c0fd079"
+                   "data" : { "<CHANNEL_ID>" : 5,
+                              "<CHANNEL_ID>" : 10 }
+                 }
+               ]
+    }
 
