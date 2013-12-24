@@ -1,3 +1,20 @@
+Sensor Network API
+==================
+
+Overview
+--------
+
+Each API request requires a user API key. The key is the first element of the URL.
+
+For example, the full URL for a request for the WSN catalog (Section 1.1) is:
+
+    https://hostname.domain.tld/api/<API KEY>/wsns
+
+For brevity the above URL will be abbreviated throughout this document as:
+
+    <API-BASE>/wsns
+
+--------------------------------------------------------------------------------
 1 Operations on Wireless Sensor Network Object
 ==============================================
 
