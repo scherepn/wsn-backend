@@ -244,54 +244,101 @@ Ignored.
 3. Operations on Sensor Channels
 ================================
 
-3.1 Add New Channel
--------------------
+3.1. Get list of Channels in a Sensor
+-------------------------------------
 **Description:**
 
 **URL:**
 
-    POST https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels
+    GET <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels
 
 **BODY:**
 
-    { "name" : "Front IR",
-      "type" : "temperature",
-      "units" : "C" }
+    [ {<Channel Object},
+      {<Channel Object},
+      ...
+      {<Channel Object>}
+    ]
 
-3.2 Get Channel
----------------
+**RETURNS:**
+
+    {}
+
+3.2. Get information about a specific Channel
+---------------------------------------------
 **Description:**
 
 **URL:**
 
-    GET https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels/<CHANNEL_ID>
+    GET <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels/<CHANNEL_ID>
 
 **RETURNS:**
 
     { "name" : "Front IR",
       "id" : <Channel ID>,
       "type" : "temperature",
-      "units" : "C" }
+      "units" : "C"
+    }
 
-3.3 Update Existing Channel
----------------------------
+**RETURNS:**
+
+    {}
+
+3.3. Add New Channel to Sensor
+------------------------------
 **Description:**
 
 **URL:**
 
-    PUT https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels/<CHANNEL_ID>
+    POST <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels
+
+**BODY:**
+
+    { "name" : "Front IR",
+      "type" : "temperature",
+      "units" : "C"
+    }
+
+**RETURNS:**
+
+    { "id" : "62408acd-893f-4f74-8c85-5ff793e3f475" }
+
+3.4. Update Existing Channel
+----------------------------
+**Description:**
+
+The body of this request may contain as many or as few data elements present in the Channel object.
+The data elements of the channel will be updated with the new values.
+
+**URL:**
+
+    PUT <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels/<CHANNEL_ID>
 
 **BODY:**
 
     { "units" : "F"}
 
-3.4 Delete Channel
-------------------
+**RETURNS:**
+
+    {}
+
+3.5. Remove Channel from Sensor
+-------------------------------
 **Description:**
+
+This action is final and cannot be undone. It will remove this channel. Any data already collected by this sensor will **NOT** be removed.
 
 **URL:**
 
-    DELETE https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels/<CHANNEL_ID>
+    DELETE <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>/channels/<CHANNEL_ID>
+
+**BODY:**
+
+Ignored.
+
+**RETURNS:**
+
+    {}
 
 --------------------------------------------------------------------------------
 4 Operations on Sample Objects
