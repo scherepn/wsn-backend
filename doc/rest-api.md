@@ -129,66 +129,116 @@ Ignored.
     {}
 
 --------------------------------------------------------------------------------
-2 Operations on Sensor Objects
-==============================
+2. Operations on Sensor Objects
+===============================
 
-2.1 Add New Sensor
-------------------
+2.1. Get list of sensors in a WSN
+---------------------------------
 **Description:**
+
+Returns a list of all sensors in a specific Wireless Sensor Network.
 
 **URL:**
 
-    POST https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors
+    GET <API-BASE>/wsn/<WSN_ID>/sensors
 
 **BODY:**
-    
-    { "name" : "Sensor #88",
-      "loc-x" : 5,
-      "loc-y" : 5,
-      "loc-z" : 5,
-      "unit" : "feet",
-      "sample-frequency" : 4,
-      "sample-interval" : "hour" }
 
-2.2 Get Sensor
---------------
+Ignored.
+
+**RETURNS:**
+
+    [ {<Sensor Object>},
+      {<Sensor Object>},
+      ...
+      {<Sensor Object>},
+    ]
+
+2.2. Get information about a specific Sensor
+--------------------------------------------
 **Description:**
 
 **URL:**
 
-    GET https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors/<SENSOR_ID>
+    GET <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>
+
+**BODY:**
+
+Ignored.
 
 **RETURNS:**
 
     { "name" : "Sensor #88",
+      "id" : "98f07253-ea74-4c1a-aef3-27657563f8d7"
       "loc-x" : 5,
       "loc-y" : 5,
       "loc-z" : 5,
       "unit" : "feet",
       "sample-frequency" : 4,
       "sample-interval" : "hour",
-      "channels" : [ <channel_A_object>, <channel_B_object>, ... ] }
+      "channels" : [ <channel_A_object>, <channel_B_object>, ... ]
+    }
 
-2.3 Update Existing Sensor
---------------------------
+2.3. Add New Sensor to a WSN
+----------------------------
 **Description:**
 
 **URL:**
 
-    PUT https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors/<SENSOR_ID>
+    POST <API-BASE>/wsn/<WSN_ID>/sensors
+
+**BODY:**
+
+    { "name" : "Sensor #88",
+      "loc-x" : 5,
+      "loc-y" : 5,
+      "loc-z" : 5,
+      "unit" : "feet",
+      "sample-frequency" : 4,
+      "sample-interval" : "hour"
+    }
+
+**RETURNS:**
+
+    { "id" : "98f07253-ea74-4c1a-aef3-27657563f8d7" }
+
+2.4. Update Existing Sensor
+---------------------------
+**Description:**
+
+The body of this request may contain as many or as few data elements present in the Sensor object.
+The data elements of the sensor will be updated with the new values.
+
+**URL:**
+
+    PUT <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>
 
 **BODY:**
 
     { "name" : "Side Temperature",
       "sample-frequency" : 15 }
 
-2.4 Delete Sensor
------------------
+**RETURNS:**
+
+    {}
+
+2.5. Remove Sensor from a WSN
+-----------------------------
 **Description:**
+
+This action is final and cannot be undone. It will remove this sensor and all channels it contains. Data collected by this sensor will **NOT** be removed.
 
 **URL:**
 
-    DELETE https://<HOSTNAME BASE>/api/wsn/<WSN_ID>/sensors/<SENSOR_ID>
+    DELETE <API-BASE>/wsn/<WSN_ID>/sensors/<SENSOR_ID>
+
+**BODY:**
+
+Ignored.
+
+**RETURNS:**
+
+    {}
 
 --------------------------------------------------------------------------------
 3. Operations on Sensor Channels
